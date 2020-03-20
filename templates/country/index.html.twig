@@ -6,6 +6,12 @@
         {% for country in countries %}
         <div class="container">
             <h4><a href="{{ path ('country_show', {id: country.id}) }}"> {{ country.name }} </a></h4>
+        <h6>Cas total Guéris</h6>
+        {{ country.healed }} <br>
+        <h6>Cas total Contaminés</h6>
+        {{country.contaminated}} <br>
+        <h6>Cas total Zombifiés</h6>
+        {{country.zombified}} <br>
         </div>
         {% endfor %}
 </section>

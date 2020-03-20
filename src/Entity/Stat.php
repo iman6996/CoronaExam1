@@ -106,4 +106,5 @@ class Stat
 
         return $this;
     }
+
 }
