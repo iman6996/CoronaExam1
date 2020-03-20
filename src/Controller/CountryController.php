@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Country;
+use App\Form\CountryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class CountryController extends AbstractController
 {
     /**
-     * @Route("/", name="country")
+     * @Route("/country", name="country")
      */
     public function index()
     {
@@ -19,7 +23,7 @@ class CountryController extends AbstractController
     }
     /**
      * Affiche un pays
-     * @Route("/country/{id}", name="country_show", methods={"GET"})
+     * @Route("/country/{id}", name="country_show", methods={"GET"}, requirements={"id":"\d+"})
      * @param Country $country
      */
     public function show(Country $country)
@@ -30,20 +34,31 @@ class CountryController extends AbstractController
     }
 
     /**
-     * Affiche le formulaire de création d'un pays
-     * @Route("/country/new", name="country_new", methods={"GET"})
+     * Affiche et  le formulaire de création d'un pays
+     * @Route("/country/new", name="country_new", methods={"GET","POST"})
+     *@param Country $country
      */
-    public function new()
+    public function new(Request $request )
     {
+    $country = new Country();
+    $form = $this->createForm(CountryType::class, $country);
+    $form->handleRequest($request);
+    if ($form->isSubmitted()) {
+        $country = $form->getData();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($country);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('country');
     }
 
-    /**
-     * Traite la requête d'un formulaire de création d'un pays
-     * @Route("/country", name="country_create", methods={"POST"})
-     */
-    public function create()
-    {
+    return $this->render('country/form.html.twig', [
+        'form' => $form->createView(),
+        'country'=>$country
+    ]);
     }
+
 
     /**
      * Affiche et Traite le formulaire d'édition d'un pays (POST) et (GET)
