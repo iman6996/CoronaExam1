@@ -28,10 +28,10 @@ class CountryController extends AbstractController
      * Affiche un pays
      * @Route("/country/{id}", name="country_show", methods={"GET"}, requirements={"id":"\d+"})
      * @param Country $country
+     * 
      */
     public function show(Country $country)
     {
-        $country = $this->getDoctrine()->getRepository(Country::class)->findBy([],['statdate' =>"DESC"]);
         return $this->render('country/show.html.twig', [
             'country' => $country
         ]);
@@ -82,5 +82,6 @@ class CountryController extends AbstractController
      */
     public function delete(Country $country)
     {
+
     }
 }

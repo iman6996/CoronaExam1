@@ -5,19 +5,22 @@
     <div class="container">
         <h1>Pays Infectés<h1>
                 <h2 class="py-4">{{ country.name }} </h2>
-                {% for stat in country.stat %}
+                {% for stat in country.stat %}  
+                <hr>
+                <h5>Les Contaminés</h5>
+                {% if stat.healed > stat.zombified %}
+            <p class="text-center" style="background-color: rgb(16, 202, 16);">{{ stat.healed }}</p>
+            {% else %}
+            <p class="text-center" style="background-color: rgb(255, 38, 38);">{{ stat.healed }}</p>
+            {% endif %}
                 <h5>Les Contaminés</h5>
                 {{ stat.contaminated }} <br>
-                <h5>Les Guéris</h5>
-                {{stat.healed}} <br>
                 <h5>Les ZOMBIFIES</h5>
                 {{ stat.zombified}} <br>
                 <h5>Date d'enregistrement</h5>
                 {{stat.statdate|date('d-m-Y')}}
-
                 {% endfor %}
-
+                <hr>
     </div>
-
 </section>
 {% endblock %}
