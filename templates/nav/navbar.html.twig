@@ -1,5 +1,5 @@
 <nav class="navbar navbar-light" style="background-color: #eeff00;">
-    <a class="navbar-brand" href="">CoronaVista</a> 
+    <a class="navbar-brand" href="{{ path ('country') }}">CoronaVista</a> 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -18,17 +18,17 @@
                         <div class="dropdown-menu" style="background-color: #da2d2de0" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="">Voir un pays</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="">Ajouter un pays</a>
-                            
+                            <a class="dropdown-item" href="{{ path ('country_new') }}">Ajouter un pays</a>
+                        </a>
                         </div>
                     </li>
         
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            #####
+                            Statistiques
                         </a>
                         <div class="dropdown-menu" style="background-color: #e446af60" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="">Voir tous les utilisateurs</a>
+                            <a class="dropdown-item" href="{{ path ('stat_new') }}">Ajouter des Statistiques</a>
                         </div>
                     </li>
                 </ul>

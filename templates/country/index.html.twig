@@ -1,18 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-        <section class=" text-center">
-            
-                {% for data in country %}
-                    
-                
-                    <div class="container">
-                        <h1>Pays Infectés<h1>
-                        <h2>{{ country.name }} </h2>
-                    </div>
-                {% endfor %}
-            
-        </section>
-
-
+<section class=" text-center">
+    <h1>Pays Infectés<h1></h1>
+        {% for country in countries %}
+        <div class="container">
+            <h4><a href="{{ path ('country_show', {id: country.id}) }}"> {{ country.name }} </a></h4>
+        </div>
+        {% endfor %}
+</section>
 {% endblock %}

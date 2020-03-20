@@ -3,35 +3,61 @@
 namespace App\Controller;
 
 use App\Entity\Stat;
+use App\Form\StatType;
+use App\Repository\StatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class StatController extends AbstractController
 {
     /**
-     * @Route("/stat", name="stat" , methods={"GET"})
+     * @Route("/stat", name="stat")
      */
     public function index()
     {
+        $stats = $this->getDoctrine()->getRepository(Stat::class)->findAll();
         return $this->render('stat/index.html.twig', [
-            'controller_name' => 'StatController',
-        ]);
+            'stats' =>$stats,
+            ]);
     }
-     /**
+    /**
      * Affiche une statistique
-     * @Route("/stat/{id}", name="stat_show", methods={"GET"})
+     * @Route("/stat/{id}", name="stat_show", methods={"GET"}, requirements={"id":"\d+"})
      * @param Stat $stat
      */
     public function show(Stat $stat)
     {
+        return $this->render('stat/show.html.twig', [
+            'stat' => $stat
+        ]);
     }
 
     /**
      *Formulaire de création de statistiques 
-     * @Route("/stat/new", name="stat_new", methods={"GET"})
+     * @Route("/stat/new", name="stat_new", methods={"GET" ,"POST"})
+     * @param Stat $stat
      */
-    public function new()
+
+    public function new(Request $request)
     {
+    $stat = new Stat();
+    $form = $this->createForm(StatType::class, $stat);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted()) {
+        $stat = $form->getData();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($stat);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('country');
+    }
+
+    return $this->render('stat/form.html.twig', [
+        'form' => $form->createView()
+    ]);
     }
 
     /**

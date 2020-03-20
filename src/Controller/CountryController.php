@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Country;
 use App\Form\CountryType;
+use App\Repository\CountryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +18,11 @@ class CountryController extends AbstractController
      */
     public function index()
     {
+        $countries = $this->getDoctrine()->getRepository(Country::class)->findAll();
         return $this->render('country/index.html.twig', [
-            'controller_name' => 'CountryController',
+            'countries' =>$countries,
         ]);
+        
     }
     /**
      * Affiche un pays
@@ -55,8 +58,9 @@ class CountryController extends AbstractController
 
     return $this->render('country/form.html.twig', [
         'form' => $form->createView(),
-        'country'=>$country
+        
     ]);
+    
     }
 
 
