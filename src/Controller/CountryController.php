@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CountryController extends AbstractController
 {
     /**
-     * @Route("/country", name="country")
+     * @Route("/", name="country")
      */
     public function index()
     {
@@ -24,6 +24,9 @@ class CountryController extends AbstractController
      */
     public function show(Country $country)
     {
+        return $this->render('country/show.html.twig', [
+            'country' => $country
+        ]);
     }
 
     /**
